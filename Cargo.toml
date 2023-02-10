@@ -1,6 +1,6 @@
 [package]
 name = "dictionary-1024"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 description = "a mnemonic dictionary with 1024 words, 10 bits per word"
 license = "MIT"

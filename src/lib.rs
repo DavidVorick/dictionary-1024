@@ -150,7 +150,7 @@ pub fn index_of_word(word: &str) -> Result<usize, Error> {
             return Ok(i);
         }
     }
-    bail!("word was not found in dictionary");
+    bail!("word prefix '{}' was not found in dictionary", word);
 }
 
 #[cfg(test)]
