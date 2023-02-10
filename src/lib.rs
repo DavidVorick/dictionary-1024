@@ -121,7 +121,7 @@ pub const DICTIONARY: [&str; 1024] = [
     "using", "usual", "utmost", "utopia", "vague", "vain", "value", "vane", "vary", "vat", "vault",
     "vector", "veer", "vegan", "vein", "velvet", "vest", "vexed", "vial", "vice", "video",
     "viking", "violin", "viper", "vital", "vivid", "vixen", "vocal", "vogue", "voice", "vortex",
-    "vote", "vowel", "voyage", "wade", "waffle", "waist", "wake", "want", "warp", "water", "wax",
+    "vote", "vowel", "voyage", "wade", "waffle", "waist", "wake", "want", "war", "water", "wax",
     "wedge", "weird", "went", "wept", "were", "whale", "when", "whole", "wide", "wield", "wife",
     "wiggle", "wild", "winter", "wire", "wise", "wives", "wizard", "wobbly", "woes", "woke",
     "wolf", "woozy", "worry", "woven", "wrap", "wrist", "wrong", "yacht", "yahoo", "yank",
@@ -151,6 +151,21 @@ pub fn index_of_word(word: &str) -> Result<usize, Error> {
         }
     }
     bail!("word prefix '{}' was not found in dictionary", word);
+}
+
+/// words_match will return 'true' if the two provided words represent the same word in the
+/// dictionary, false otherwise. If the words do not appear in the dictionary at all, false will
+/// also be returned.
+pub fn words_match(a: &str, b: &str) -> bool {
+    let ai = match index_of_word(a) {
+        Ok(x) => x,
+        Err(_) => return false,
+    };
+    let bi = match index_of_word(b) {
+        Ok(x) => x,
+        Err(_) => return false,
+    };
+    ai == bi
 }
 
 #[cfg(test)]
@@ -202,5 +217,13 @@ mod tests {
         // Check for errors.
         index_of_word("aaron").unwrap_err();
         index_of_word("ab").unwrap_err();
+
+        assert!(words_match("abbey", "abbot"));
+        assert!(words_match("war", "warp"));
+        assert!(words_match("wolf", "wolf"));
+        assert!(!words_match("ab", "abbey"));
+        assert!(!words_match("aaron", "aaa"));
+        assert!(!words_match("abbey", "warp"));
+        assert!(!words_match("abbey", "aaron"));
     }
 }
