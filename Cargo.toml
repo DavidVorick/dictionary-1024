@@ -1,7 +1,10 @@
 [package]
 name = "dictionary-1024"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "a mnemonic dictionary with 1024 words, 10 bits per word"
 license = "MIT"
 repository = "https://github.com/DavidVorick/dictionary-1024"
+
+[dependencies]
+anyhow = "1"

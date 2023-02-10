@@ -16,6 +16,8 @@
 //! let index = dictionary_1024::index_of_word(&word); // 5
 //! ```
 
+use anyhow::{bail, Error, Result};
+
 /// DICTIONARY_UNIQUE_PREFIX defines the number of characters that are guaranteed to be unique for
 /// each word in the dictionary. The seed code only looks at these three characters when parsing a
 /// word, allowing users to make substitutions for words if they prefer or find it easier to
@@ -137,9 +139,9 @@ pub fn word_at_index(i: usize) -> String {
 /// index_of_word will return the index of the provided word within the dictionary, using only the
 /// first three characters of the word to find a match. If no match is found, an error will be
 /// returned.
-pub fn index_of_word(word: &str) -> Result<usize, String> {
+pub fn index_of_word(word: &str) -> Result<usize, Error> {
     if word.len() < 3 {
-        return Err("each word must have at least three characters".to_string());
+        bail!("each word must have at least three characters");
     }
     let word = &word[..3];
 
@@ -148,7 +150,7 @@ pub fn index_of_word(word: &str) -> Result<usize, String> {
             return Ok(i);
         }
     }
-    return Err("word was not found in the dictionary".to_string());
+    bail!("word was not found in dictionary");
 }
 
 #[cfg(test)]
